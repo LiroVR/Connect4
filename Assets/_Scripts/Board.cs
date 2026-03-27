@@ -19,13 +19,13 @@ public class Board
             if (grid[row, column] == 0)
             {
                 grid[row, column] = player;
-                return row; //Return the row where the piece was placed
+                return row; //Returns the row where the piece was placed
             }
         }
         return -1; //Column is full, and thus the move is invalid
     }
 
-    public void UndoMove(int column)
+    public void UndoMove(int column) //AI needs to be able to undo moves during its simulations
     {
         for (int row = 0; row < height; row++)
         {
@@ -37,7 +37,7 @@ public class Board
         }
     }
 
-    public List<int> GetValidMoves()
+    public List<int> GetValidMoves() //Returns a list of columns that aren't full
     {
         List<int> validMoves = new List<int>();
         for (int col = 0; col < width; col++)
