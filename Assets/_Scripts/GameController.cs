@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
     public Vector3 boardOrigin = new Vector3(0,0,0);
     public Transform boardTransform;
     public float cellSize = 1.0f; //Each cell is 1 metre wide, to make things simple
+    private bool gameOver = false;
 
     public Vector3 GetWorldPosition(int row, int column)
     {
@@ -53,12 +54,13 @@ public class GameController : MonoBehaviour
             int aiMove = aiPlayer.GetBestMove(board);
             int row = board.PlacePiece(aiMove, 1);
             SpawnPiece(row, aiMove, 1);
-            if (board.CheckWin(1))
+            if (board.CheckWin(1) && !gameOver)
             {
                 Debug.Log("AI wins!");
                 loseText.SetActive(true);
                 resetButton.SetActive(true);
                 //enabled = false; //Stop the game, as the AI won :(
+                gameOver = true;
             }
             currentPlayer = 2;
         }
@@ -71,12 +73,13 @@ public class GameController : MonoBehaviour
             {
                 int row = board.PlacePiece(column, 2);
                 SpawnPiece(row, column, 2);
-                if (board.CheckWin(2))
+                if (board.CheckWin(2) && !gameOver)
                 {
                     Debug.Log("Player wins!");
                     winText.SetActive(true);
                     resetButton.SetActive(true);
                     //enabled = false; //Stop the game, as the player won :)
+                    gameOver = true;
                 }
                 currentPlayer = 1;
             }
